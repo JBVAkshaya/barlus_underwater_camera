@@ -17,6 +17,7 @@
     "--privileged",
     "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
     "--volume=/mnt/wslg:/mnt/wslg",
+    "--volume=/home/ubuntu/Research/mnt_docker/underwater-assembly:/home/ubuntu/ws_ros/src/underwater-assembly",
     "--runtime=nvidia",
     "--gpus=all"
   ],
