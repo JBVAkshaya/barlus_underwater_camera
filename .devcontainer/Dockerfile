@@ -1,4 +1,4 @@
-ARG ROS_DISTRO=rolling
+ARG ROS_DISTRO=jazzy
 FROM ros:$ROS_DISTRO-ros-base AS desktop
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -132,7 +132,16 @@ RUN sudo apt-get update \
     && sudo apt-get clean -y \
     && sudo rm -rf /var/lib/apt/lists/*
 
+USER root
+
+RUN mkdir -p /run/user/$USER_UID && \
+    chown $USER_UID:$USER_GID /run/user/$USER_UID && \
+    chmod 755 /run/user/$USER_UID
+
+USER $USERNAME
+
 # Env vars for the nvidia-container-runtime.
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=graphics,utility,compute
 ENV QT_X11_NO_MITSHM=1
+ENV XDG_RUNTIME_DIR=/run/user/$USER_UID
